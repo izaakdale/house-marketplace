@@ -175,12 +175,10 @@ button {
 
 .navbarListItemName,
 .navbarListItemNameActive {
-  margin-top: 0.25rem;
-  font-size: 14px;
-  font-weight: 600;
+  margin-top: 5px;
   color: #8f8f8f;
 }
-.navbarListItemNameActive {
+.ItemNameActive {
   color: #2c2c2c;
 }
 
