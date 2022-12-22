@@ -12,13 +12,16 @@ function SignIn() {
 
     const navigate = useNavigate()
 
-    const onChange = () => {
-
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.value,
+        }))
     }
 
     return (
         <div>
-            <div className="page-container">
+            <div className="pageContainer">
                 <header>
                     <p className="pageHeader">
                         Welcome back!
@@ -28,7 +31,7 @@ function SignIn() {
                     <form>
                         <input type="email" className='emailInput' placeholder='email...' id="email" value={email} onChange={onChange}/>
                         <div className="passwordInputDiv">
-                            <input className='passwordInput' placeholder='password...' id='password' value={password} type={showPassword? 'text' : 'password' } />
+                            <input className='passwordInput' placeholder='password...' id='password' value={password} type={showPassword? 'text' : 'password' } onChange={onChange}/>
                             <img src={visibilityIcon} alt="show password" className='showPassword' onClick={() => setShowPassword((prevState) => !prevState)} />
                         </div>
                         <Link to='/forgot-password' className='forgotPasswordLink'>Forgot Password?</Link>
