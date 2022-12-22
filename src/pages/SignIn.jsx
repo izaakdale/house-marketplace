@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FaArrowAltCircleRight } from 'react-icons/fa'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { toast } from 'react-toastify'
 
 function SignIn() {
 
@@ -21,7 +22,6 @@ function SignIn() {
     }
 
     const onSubmit = async (e) => {
-
         try {
             e.preventDefault()
 
@@ -32,7 +32,7 @@ function SignIn() {
                 navigate('/')
             }
         } catch (error) {
-            console.log(error);
+            toast.error('invalid user credentials')
         }
     }
 

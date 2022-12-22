@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify"; 
+import 'react-toastify/dist/ReactToastify.css';
 import NavBar from "./components/NavBar";
 import Explore from "./pages/Explore";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -21,6 +23,20 @@ function App() {
         </Routes>
         <NavBar/>
       </Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        />
+        {/* Same as default settings left in for future changes */}
+      <ToastContainer />
     </div>
   );
 }
