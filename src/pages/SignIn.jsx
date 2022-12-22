@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaArrowAltCircleRight } from 'react-icons/fa'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
 function SignIn() {
 
@@ -19,6 +20,22 @@ function SignIn() {
         }))
     }
 
+    const onSubmit = async (e) => {
+
+        try {
+            e.preventDefault()
+
+            const auth = getAuth()
+            const userCredentials = await signInWithEmailAndPassword(auth, email, password)
+    
+            if (userCredentials.user) {
+                navigate('/')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div>
             <div className="pageContainer">
@@ -28,7 +45,7 @@ function SignIn() {
                     </p>
                 </header>
                 <main>
-                    <form>
+                    <form onSubmit={onSubmit}>
                         <input type="email" className='emailInput' placeholder='email...' id="email" value={email} onChange={onChange}/>
                         <div className="passwordInputDiv">
                             <input className='passwordInput' placeholder='password...' id='password' value={password} type={showPassword? 'text' : 'password' } onChange={onChange}/>
@@ -39,7 +56,9 @@ function SignIn() {
                             <p className="signInText">
                                 Sign In
                             </p>
-                            <FaArrowAltCircleRight fill='#ffffff' width='34px' className='signInButton'/>
+                            <button className='signInButton'>
+                                <FaArrowAltCircleRight size={100} fill='#ffffff' width='34px' height='34px'/>
+                            </button>
                         </div>
                     </form>
 

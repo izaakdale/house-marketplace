@@ -227,9 +227,9 @@ button {
 }
 
 .signInButton,
-.signUpButton,
-.signInText,
-.signUpText {
+.signUpButton {
+/* .signInText, */
+/* .signUpText { */
   cursor: pointer;
 }
 @media (min-width: 1024px) {

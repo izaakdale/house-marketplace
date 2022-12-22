@@ -3,6 +3,9 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaArrowAltCircleRight } from 'react-icons/fa'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
+import { db } from '../firebase.config'
 
 function SignUp() {
 
@@ -19,6 +22,33 @@ function SignUp() {
         }))
     }
 
+    const onSubmit = async(e) => {
+        e.preventDefault()
+
+        try {
+            const auth = getAuth()
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+
+            const user = userCredential.user
+
+            updateProfile(auth.currentUser, {
+                displayName: name
+            })
+
+            const formDataCopy = {...formData}
+            delete formDataCopy.password 
+            formDataCopy.timestamp = serverTimestamp()
+
+            await setDoc(doc(db, 'users', user.uid), formDataCopy)
+
+            navigate('/')
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
     return (
         <div>
             <div className="pageContainer">
@@ -28,7 +58,7 @@ function SignUp() {
                     </p>
                 </header>
                 <main>
-                    <form>
+                    <form onSubmit={onSubmit}>
                         <input type="text" className='nameInput' placeholder='name...' id="name" value={name} onChange={onChange}/>
                         <input type="email" className='emailInput' placeholder='email...' id="email" value={email} onChange={onChange}/>
                         <div className="passwordInputDiv">
@@ -39,7 +69,9 @@ function SignUp() {
                             <p className="signUpText">
                                 Register
                             </p>
-                            <FaArrowAltCircleRight fill='#ffffff' width='34px' className='signUpButton'/>
+                            <button className='signUpButton'>
+                                <FaArrowAltCircleRight size={100} fill='#ffffff' width='34px' height='34px'/>
+                            </button>
                         </div>
                     </form>
 
